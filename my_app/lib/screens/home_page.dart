@@ -50,8 +50,26 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    double height = double.parse(heightController.text);
-    double weight = double.parse(weightController.text);
+    double? height = double.tryParse(heightController.text);
+    double? weight = double.tryParse(weightController.text);
+
+    if (height == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid height"),
+        ),
+      );
+      return;
+    }
+
+    if (weight == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid weight"),
+        ),
+      );
+      return;
+    }
 
     double bmi;
 
