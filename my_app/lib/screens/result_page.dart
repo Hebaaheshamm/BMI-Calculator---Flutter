@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../data/history_data.dart';
-import '../models/bmi_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ResultPage extends StatelessWidget {
   final double bmi;
@@ -32,14 +30,14 @@ class ResultPage extends StatelessWidget {
 
     String date = "${now.day}/${now.month}/${now.year}";
 
-    historyList.add(
-      BMIModel(
-        bmi: bmi,
-        result: result,
-        weight: weight,
-        date: date,
-      ),
-    );
+    var box = Hive.box("history");
+
+    box.add({
+      "bmi": bmi,
+      "result": result,
+      "weight": weight,
+      "date": date,
+    });
   }
 
   @override
@@ -57,9 +55,7 @@ class ResultPage extends StatelessWidget {
 
             const Text(
               "Your Current BMI",
-              style: TextStyle(
-                fontSize: 20,
-              ),
+              style: TextStyle(fontSize: 20),
             ),
 
             const SizedBox(height: 15),
@@ -133,13 +129,11 @@ class ResultPage extends StatelessWidget {
                   if (bmi < 18.5) {
                     position = (bmi / 18.5) * (width / 4);
                   } else if (bmi < 25) {
-                    position =
-                        (width / 4) +
-                            ((bmi - 18.5) / (25 - 18.5)) * (width / 4);
+                    position = (width / 4) +
+                        ((bmi - 18.5) / (25 - 18.5)) * (width / 4);
                   } else if (bmi < 30) {
-                    position =
-                        (width / 2) +
-                            ((bmi - 25) / (30 - 25)) * (width / 4);
+                    position = (width / 2) +
+                        ((bmi - 25) / (30 - 25)) * (width / 4);
                   } else {
                     double value = bmi;
 
@@ -147,9 +141,8 @@ class ResultPage extends StatelessWidget {
                       value = 40;
                     }
 
-                    position =
-                        (width * 3 / 4) +
-                            ((value - 30) / 10) * (width / 4);
+                    position = (width * 3 / 4) +
+                        ((value - 30) / 10) * (width / 4);
                   }
 
                   if (position > width - 24) {
@@ -191,7 +184,7 @@ class ResultPage extends StatelessWidget {
                       ),
 
                       Positioned(
-                        left: position,
+                        left: position - 17,
                         top: -18,
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -263,6 +256,8 @@ class ResultPage extends StatelessWidget {
                             content: Text("Saved Successfully"),
                           ),
                         );
+
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         "Save Result",
