@@ -101,6 +101,67 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+    if (height < 50 || height > 300) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid height"),
+        ),
+      );
+      return;
+    }
+
+    if (weight < 10 || weight > 500) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid weight"),
+        ),
+      );
+      return;
+    }
+int? age = int.tryParse(ageController.text);
+
+if (age == null) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please enter a valid age"),
+    ),
+  );
+  return;
+}
+    if (age < 1 || age > 120) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter a valid age"),
+        ),
+      );
+      return;
+    }
+    if (height < 50 || height > 300) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please enter a valid height"),
+    ),
+  );
+  return;
+}
+
+if (weight < 10 || weight > 500) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please enter a valid weight"),
+    ),
+  );
+  return;
+}
+
+if (age < 1 || age > 120) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text("Please enter a valid age"),
+    ),
+  );
+  return;
+}
   }
 
   @override
